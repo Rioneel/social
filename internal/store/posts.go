@@ -33,7 +33,7 @@ func (s *PostStore) Create(ctx context.Context, post *Post) error{
 		pq.Array(post.Tags),
 	).Scan(
 		&post.ID,
-		&post.CreatedAt,
+		&post.CreatedAt, 
 		&post.UpdatedAt,
 	)
 	if err != nil{
