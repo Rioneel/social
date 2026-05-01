@@ -33,8 +33,15 @@ r := chi.NewRouter()
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+
 	r.Route("/v1", func(r chi.Router){
 		r.Get("/health", app.healthCheckerHandler)
+			// r.Post("/healthstatusfromuser",app )
+		
+
+		r.Route("/posts", func(r chi.Router) {
+			r.Post("/",app.CreatePostHandler)
+		})
 	})
 
 	return r

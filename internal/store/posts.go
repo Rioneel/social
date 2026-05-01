@@ -11,6 +11,7 @@ type Post struct{
 	Content string `json:"content"`
 	Title string `json:"title"`
 	UserID int64 `json:"user_id"`
+	// Image string `json:"Image_path"`
 	Tags []string `json:"tags"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`

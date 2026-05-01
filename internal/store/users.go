@@ -9,6 +9,7 @@ type User struct {
 	Username string `json:"username"`
 	Email string `json:"email"`
 	password string `json:"-"`
+	// profile_pic string `json:"profile_pic_path`
 	CreatedAt string `json:"created_at"`
 }
 type UsersStore struct{
@@ -33,6 +34,7 @@ func (s *UsersStore) Create(ctx context.Context, user *User) error{
 		return err
 	}
 	
+
 	return nil
 
 
