@@ -41,6 +41,10 @@ r := chi.NewRouter()
 
 		r.Route("/posts", func(r chi.Router) {
 			r.Post("/",app.CreatePostHandler)
+		
+		r.Route("/{postID}", func(r chi.Router) {
+			r.Get("/", app.getPostHandler)
+		})
 		})
 	})
 

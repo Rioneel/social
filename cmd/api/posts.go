@@ -2,7 +2,9 @@ package main
 
 import (
 	"net/http"
-
+	"strconv"
+	"errors"
+	"github.com/go-chi/chi/v5"
 	"github.com/rioneel/social/internal/store"
 )
 type CreatePostPayload struct{
@@ -39,4 +41,27 @@ func (app *application) CreatePostHandler(w http.ResponseWriter, r *http.Request
 		writeJSONError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+}
+
+func (app *application) getPostHandler(w http.ResponseWriter,r *http.Request){
+	idParam := chi.URLParam(r, "postID")
+	id ,err := strconv.ParseInt(idParam, 10 ,64)
+	ctx := r.Context()
+
+	post, err := app.store.Posts.GetByID(ctx, id); if err!=nil{
+		switch{
+		case errors.Is(err, store.ErrNotFound):
+			writeJSONError(w, http.StatusNotFound, err.Error())
+		default:
+			writeJSONError(w, http.StatusInternalServerError, err.Error())
+		}
+		return
+	}
+	if err := writeJSON(w, http.StatusOK, post); err != nil{
+		writeJSONError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+
+
 }
