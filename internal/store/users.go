@@ -3,6 +3,7 @@ package store
 import (
 	"database/sql"
 	"context"
+	"time"
 )
 type User struct {
 	ID int64 `json:"id"`
@@ -10,13 +11,13 @@ type User struct {
 	Email string `json:"email"`
 	password string `json:"-"`
 	// profile_pic string `json:"profile_pic_path`
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 }
-type UsersStore struct{
+type UserStore struct{
 	db *sql.DB
 }
 
-func (s *UsersStore) Create(ctx context.Context, user *User) error{
+func (s *UserStore) Create(ctx context.Context, user *User) error{
 	query := `
 	INSERT INTO users (username, email, password) VALUES ($1,$2,$3)
 	RETURNING id, created_at `
